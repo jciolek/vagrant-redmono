@@ -6,11 +6,9 @@ stage { 'bootstrap':
   before => Stage['main'],
 }
 
-class { 'apt':
-  stage => bootstrap,
-}
-
 class add_repos {
+  class { 'apt': }
+
   exec { 'apt-get update':
     command => 'apt-get update',
   }
@@ -44,6 +42,23 @@ class nodejs {
   }
 }
 
+class nodejs_modules {
+  package { 'forever':
+    ensure => present,
+    provider => npm,
+  }
+
+  package { 'bower':
+    ensure => present,
+    provider => npm,
+  }
+
+  package { 'grunt-cli':
+    ensure => present,
+    provider => npm,
+  }
+}
+
 class redis {
   package { 'redis-server':
     ensure => latest,
@@ -63,4 +78,6 @@ class { 'add_repos':
 class { 'nodejs': }
 class { 'redis': }
 class { 'mongodb': }
-
+class { 'nodejs_modules': 
+  require => Class['nodejs'],
+}

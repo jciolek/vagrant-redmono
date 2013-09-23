@@ -81,10 +81,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # end
 
   config.vm.provision :shell do |shell|
-    shell.inline = "\
-      mkdir -p /etc/puppet/modules;
-      puppet module install -f puppetlabs/stdlib;
-      puppet module install -f puppetlabs/apt;"
+    shell.path = "provision.sh"
   end
 
   config.vm.provision "puppet"
