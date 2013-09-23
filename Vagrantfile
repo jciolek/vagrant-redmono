@@ -80,11 +80,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   puppet.manifest_file  = "site.pp"
   # end
 
-  config.vm.provision :shell do |shell|
-    shell.path = "provision.sh"
-  end
+  # config.vm.provision :shell do |shell|
+  #   shell.path = "provision.sh"
+  # end
 
-  config.vm.provision "puppet"
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "puppet/manifests"
+    puppet.manifest_file = "default.pp"
+    puppet.module_path = "puppet/modules"
+  end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
