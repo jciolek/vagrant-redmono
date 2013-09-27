@@ -13,18 +13,6 @@ class ppa {
   }
 }
 
-class nodejs {
-  apt::ppa { 'nodejs':
-    name => 'ppa:chris-lea/node.js',
-    require => Class['ppa'],
-  }
-
-  package { 'nodejs':
-    ensure => latest,
-    require => Apt::Ppa['nodejs'],
-  }
-}
-
 class nodejs_modules {
   package { 'forever':
     ensure => present,
@@ -39,39 +27,6 @@ class nodejs_modules {
   package { 'grunt-cli':
     ensure => present,
     provider => npm,
-  }
-}
-
-class redis {
-  apt::ppa { 'redis-server':
-    name => 'ppa:chris-lea/redis-server',
-    require => Class['ppa'],
-  }
-
-  package { 'redis-server':
-    ensure => latest,
-    require => Apt::Ppa['redis-server'],
-  }
-
-
-  file { '/etc/redis':
-    ensure => directory,
-    owner => root,
-    group => root,
-    before => File['redis.conf'],
-  }
-
-  file { 'redis.conf':
-    path => '/etc/redis/redis.conf',
-    source => 'puppet:///modules/redis/redis.conf',
-    owner => root,
-    group => root,
-    before => Package['redis-server'],
-  }
-
-  service { 'redis-server':
-    require => Package['redis-server'],
-    ensure => running,
   }
 }
 
@@ -91,10 +46,16 @@ class mongodb {
   }
 }
 
+class { 'redis':
+  redis_ver => '2.6.14',
+}
+redis::service { 'redis-service': }
+
 class { 'apt': }
 class { 'ppa': }
-class { 'nodejs': }
-class { 'redis': }
+class { 'nodejs':
+  node_ver => 'v0.10.18',
+}
 class { 'mongodb': }
 class { 'nodejs_modules': 
   require => Class['nodejs'],
