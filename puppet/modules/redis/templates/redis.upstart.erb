@@ -1,0 +1,17 @@
+# Ubuntu upstart file at /etc/init/redis-server-<%= port %>.conf
+
+kill timeout 300 # wait 300s between SIGTERM and SIGKILL.
+
+pre-start script
+    mkdir -p /var/lib/redis/
+    mkdir -p /var/log/redis/
+end script
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+script
+  ENABLE_REDIS="yes"
+  if [ -f /etc/default/redis ]; then . /etc/default/redis; fi
+  if [ "x$ENABLE_REDIS" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid redis --exec /usr/local/bin/redis-server /etc/redis/<%= port %>.conf; fi
+end script

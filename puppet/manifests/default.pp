@@ -47,15 +47,15 @@ class mongodb {
 }
 
 class { 'redis':
-  redis_ver => '2.6.14',
+  version => '2.6.14',
 }
-redis::service { 'redis-service': }
 
-class { 'apt': }
-class { 'ppa': }
 class { 'nodejs':
   node_ver => 'v0.10.18',
 }
+
+class { 'apt': }
+class { 'ppa': }
 class { 'mongodb': }
 class { 'nodejs_modules': 
   require => Class['nodejs'],

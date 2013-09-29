@@ -4,9 +4,6 @@
 [submodule "puppet/modules/stdlib"]
 	path = puppet/modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
-[submodule "puppet/modules/redis"]
-	path = puppet/modules/redis
-	url = https://github.com/logicalparadox/puppet-redis
 [submodule "puppet/modules/nodejs"]
 	path = puppet/modules/nodejs
 	url = https://github.com/logicalparadox/puppet-nodejs.git
