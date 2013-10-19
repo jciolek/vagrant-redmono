@@ -28,6 +28,10 @@ class nodejs_modules {
     ensure => present,
     provider => npm,
   }
+  package { 'nodemon':
+    ensure => present,
+    provider => npm,
+  }
 }
 
 class mongodb {
