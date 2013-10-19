@@ -55,7 +55,7 @@ class { 'redis':
 }
 
 class { 'nodejs':
-  node_ver => 'v0.10.18',
+  node_ver => 'v0.10.21',
 }
 
 class { 'apt': }
