@@ -45,6 +45,7 @@ The box provisioned will have the following installed and ready to rock and roll
 - nodejs: v0.10.18 (compiled from source)
 - redis: v2.4.14 (compiled from source, listening on port 6379)
 - mongodb: latest version from http://downloads-distro.mongodb.org/repo/ubuntu-upstart
+- rinetd: for redirecting external ports (80, 443) to local ones
 - npm modules: forever, bower and grunt-cli
 
 
