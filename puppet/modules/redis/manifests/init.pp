@@ -8,18 +8,18 @@ class redis(
 
   if defined(Package['curl']) == false {
     package { "curl":
-      ensure => "installed"
+        ensure => "installed"
     }
   }
 
   if defined(Package['build-essential']) == false {
     package { "build-essential":
-      ensure => "installed"
+        ensure => "installed"
     }
   }
 
   group { "redis":
-    ensure => present
+      ensure => present
   }
 
   user { "redis":

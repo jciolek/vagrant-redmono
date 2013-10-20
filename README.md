@@ -49,10 +49,13 @@ The box provisioned will have the following installed and ready to rock and roll
 
 
 ## Networking
+### IP address
 The network interface address of the guest is statically assigned as 10.0.0.2, the host will have 10.0.0.1. It makes things easier to access the vagrant box from your local machine - simply put an entry to your hosts file and you are done.
 
 If you use this range in your local network or you do not like that for whatever other reason you have two friens to help you out with it: the Vagrantfile and the URL: http://docs.vagrantup.com/v2/networking/
 
+### Port redirection
+The hassle of accessing port 3000 or wotnot if you do not want to run node as root (probably you should not want that) made me add rinetd. This clever little thing neatly redirects external to local ones (localhost). I have set it up for ports 80 and 443 going to 3080 and 3443 respectively. Of course it's configurable, so you can easily change the ports in the Vagrantfile or add your own. Please note port 443 - it's SSL ready.
 
 # Future considerations
 As I find DigitalOcean really nice, I have an idea of using their awesome API to control the full provisioning process from puppet. That including provisioning a new box of course.
