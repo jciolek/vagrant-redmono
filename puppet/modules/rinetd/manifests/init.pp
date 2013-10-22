@@ -4,21 +4,21 @@ class rinetd(
     }
 ) {
 
-  file { "rinetd_conffile":
+  package { "rinetd":
+      ensure => installed
+  }
+  
+  file { "rinetd_conf":
       ensure => file
     , path => "/etc/rinetd.conf"
     , content => template("${module_name}/rinetd.conf.erb")
     , owner => "root"
     , group => "root"
-  }
-  
-  package { "rinetd":
-      ensure => installed
-    , require => File['rinetd_conffile']
+    . notify => Service['rinetd']
   }
   
   service { "rinetd":
       ensure => running
-    , require => [ Package['rinetd'] ]
+    , require => Package['rinetd']
   }
 }

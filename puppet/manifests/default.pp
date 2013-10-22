@@ -71,9 +71,16 @@ class { 'nodejs_modules':
     require => Class['nodejs']
 }
 
-class { 'rinetd':
-    ports => {
-        "80" => "3080"
-      , "443" => "3443"
-    }
+# If you want to use rinetd uncomment the following.
+# Please remember to comment out nginx, as they bind to the same ports!
+#
+# class { 'rinetd':
+#     ports => {
+#         "80" => "3080"
+#       , "443" => "3443"
+#     }
+# }
+
+class { 'nginx':
+    port => "3000"
 }

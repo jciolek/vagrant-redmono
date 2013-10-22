@@ -45,9 +45,11 @@ The box provisioned will have the following installed and ready to rock and roll
 - nodejs: v0.10.18 (compiled from source)
 - redis: v2.4.14 (compiled from source, listening on port 6379)
 - mongodb: latest version from http://downloads-distro.mongodb.org/repo/ubuntu-upstart
-- rinetd: for redirecting external ports (80, 443) to local ones
+- nginx: as a reverse proxy, serving over http and https 
 - npm modules: forever, bower and grunt-cli
 
+also, as an alternative to nginx:
+- rinetd: for redirecting external ports (80, 443) to local ones
 
 ## Networking
 ### IP address
@@ -57,6 +59,12 @@ If you use this range in your local network or you do not like that for whatever
 
 ### Port redirection
 The hassle of accessing port 3000 or wotnot if you do not want to run node as root (probably you should not want that) made me add rinetd. This clever little thing neatly redirects external to local ones (localhost). I have set it up for ports 80 and 443 going to 3080 and 3443 respectively. Of course it's configurable, so you can easily change the ports in the Vagrantfile or add your own. Please note port 443 - it's SSL ready.
+
+Later on I have decided to replace rinetd with nginx serving as a reverse proxy. It has serveral advantages:
+- can take on the responsibility of serving your node app over ssl
+- can serve from multiple vhosts, proxying serveral apps on the same server
+
+I have left rinetd commented out in the main manifest and ready to be deployed if you feel like nginx is too fancy for you.
 
 # Future considerations
 As I find DigitalOcean really nice, I have an idea of using their awesome API to control the full provisioning process from puppet. That including provisioning a new box of course.

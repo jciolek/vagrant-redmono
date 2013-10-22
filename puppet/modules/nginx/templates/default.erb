@@ -1,0 +1,14 @@
+server {
+        listen 80;
+        listen 443 default_server ssl;
+
+        ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+        ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+        ssl_session_cache shared:SSL:10m;
+
+        location / {
+                proxy_pass http://localhost:<%= @port %>/;
+                proxy_set_header Host $host;
+                proxy_buffering off;
+        }
+}
