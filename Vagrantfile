@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   config.vm.network :private_network, ip: "10.0.0.2"
 
-  config.vm.hostname = "pastajar"
+  config.vm.hostname = "node-box"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -41,6 +41,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  
+  # Share the node-apps folder. You should probably replace "./node" with your
+  # real application directory and change supervisor's config in puppet to point
+  # to your app on the guest system.
+  config.vm.synced_folder "./node", "/var/node"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

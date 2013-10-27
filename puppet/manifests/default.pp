@@ -84,3 +84,14 @@ class { 'nodejs_modules':
 class { 'nginx':
     port => "3000"
 }
+
+class { 'supervisor':
+    apps => {
+        "my-app" => {
+            dir => "/var/node/my-app"
+          , path => "/var/node/my-app/app.js"
+          , env => "development"
+        }
+    }
+  , require => Class['nodejs']
+}

@@ -1,0 +1,16 @@
+[program:<%= @title %>]
+<%
+if @app['env'] == 'development'
+  command = 'supervisor'
+else
+  command = 'node'
+end
+-%>
+command = <%= command %> <%= @app['path'] %>
+directory = <%= @app['dir'] %>
+user = node
+autostart = true
+autorestart = true
+stdout_logfile = /var/log/supervisor/<%= @title %>.log
+stderr_logfile = /var/log/supervisor/<%= @title %>_err.log
+environment = NODE_ENV="<%= @app['env'] %>"

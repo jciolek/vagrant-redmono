@@ -27,8 +27,9 @@ git submodule update
 vagrant box add precise64 http://files.vagrantup.com/precise64.box
 vagrant up
 ```
-And there you go. Your vagrant box is up and running, with nodejs, redis and mongodb, waiting for your app to change the world. Have fun!
+And there you go. Your vagrant box is up and running, with nodejs, redis and mongodb, waiting for your app to change the world.
 
+The sample app should be instantly accessbile at http://10.0.0.2/ and reacting to any change you make to it. Check it out!
 
 # The environment
 
@@ -45,8 +46,9 @@ The box provisioned will have the following installed and ready to rock and roll
 - nodejs: v0.10.18 (compiled from source)
 - redis: v2.4.14 (compiled from source, listening on port 6379)
 - mongodb: latest version from http://downloads-distro.mongodb.org/repo/ubuntu-upstart
-- nginx: as a reverse proxy, serving over http and https 
-- npm modules: forever, bower and grunt-cli
+- nginx: as a reverse proxy, serving over http and https
+- supervisor: to keep your app up and running
+- npm modules: supervisor, forever, bower and grunt-cli
 
 also, as an alternative to nginx:
 - rinetd: for redirecting external ports (80, 443) to local ones
@@ -65,6 +67,15 @@ Later on I have decided to replace rinetd with nginx serving as a reverse proxy.
 - can serve from multiple vhosts, proxying serveral apps on the same server
 
 I have left rinetd commented out in the main manifest and ready to be deployed if you feel like nginx is too fancy for you.
+
+## How about your app?
+The whole purpose of this project is to create dev environment instantly. Ideally, serving your app from the get-go and reacting to changes as you make them. I have some good news for you here - it works like that!
+
+The directory ./node from this project gets mounted on the VM under /var/node. The sample application (my-app) which you can find in there is started through node-supervisor, which keeps monitoring for changes. Every time you change something in your app it gets restarted.
+
+node-supervisor is in turn started by supervisord, which makes sure that whenever the latter crashes it will get respawned.
+
+The good news don't stop here. If you provision for "production" instead of "development" (you need make the change in puppet/manifests/default.pp) bare node takes care of running your app instead of node-supervisor.   
 
 # Future considerations
 As I find DigitalOcean really nice, I have an idea of using their awesome API to control the full provisioning process from puppet. That including provisioning a new box of course.
