@@ -2,6 +2,16 @@ Exec {
     path => '/usr/bin:/bin:/usr/local/bin'
 }
 
+$apps = {
+    "my-app" => {
+        dir => "/var/node/my-app"
+      , path => "/var/node/my-app/app.js"
+      , env => "development"
+      , port => "3000"
+      , domain => "my-app.localdomain"
+    }
+}
+
 class ppa {
   exec { 'apt-get update':
       command => 'apt-get update'
@@ -82,16 +92,10 @@ class { 'nodejs_modules':
 # }
 
 class { 'nginx':
-    port => "3000"
+    apps => $apps
 }
 
 class { 'supervisor':
-    apps => {
-        "my-app" => {
-            dir => "/var/node/my-app"
-          , path => "/var/node/my-app/app.js"
-          , env => "development"
-        }
-    }
+    apps => $apps
   , require => Class['nodejs']
 }

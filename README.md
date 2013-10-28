@@ -71,11 +71,13 @@ I have left rinetd commented out in the main manifest and ready to be deployed i
 ## How about your app?
 The whole purpose of this project is to create dev environment instantly. Ideally, serving your app from the get-go and reacting to changes as you make them. I have some good news for you here - it works like that!
 
-The directory ./node from this project gets mounted on the VM under /var/node. The sample application (my-app) which you can find in there is started through node-supervisor, which keeps monitoring for changes. Every time you change something in your app it gets restarted.
+Initially, the directory ./node from this project gets mounted on the VM under /var/node. You can change this setting or add other directories to be mounted in the Vagrantfile. The sample application (my-app) which you can find in ./node is started through node-supervisor, which keeps monitoring file changes. Every time you change something in your app it gets restarted.
 
 node-supervisor is in turn started by supervisord, which makes sure that whenever the latter crashes it will get respawned.
 
-The good news don't stop here. If you provision for "production" instead of "development" (you need make the change in puppet/manifests/default.pp) bare node takes care of running your app instead of node-supervisor.   
+As I usually tend to work on a few projects at the same time, limiting myself to one app in this setup would be silly. Therefore both supervisor and nginx take their configuration from the $apps hash in ./puppet/manifests/default.pp. You can specify as many apps as you want, following the example given. Puppet will create configuration files for them which should keep them running.
+
+The good news don't stop here. If you provision for "production" instead of "development" (you need make the change in puppet/manifests/default.pp) bare node takes care of running your app instead of node-supervisor. 
 
 # Future considerations
 As I find DigitalOcean really nice, I have an idea of using their awesome API to control the full provisioning process from puppet. That including provisioning a new box of course.
