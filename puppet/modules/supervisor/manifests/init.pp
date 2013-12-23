@@ -40,19 +40,19 @@ class supervisor (
   }
   
   package { "node-supervisor":
-      name => "supervisor@0.5.6"
-    , ensure => installed
-    , provider => npm
+      name        => "supervisor@0.5.6"
+    , ensure      => present
+    , provider    => npm
   }
 
   config_files { $app_keys:
       apps => $apps
-    , require => Package['node-supervisor', 'supervisor']
+    , require => Package['supervisor', 'node-supervisor']
     , notify => Service['supervisor']
   }
   
   service { "supervisor":
       ensure => running
-    , require => [ Package['supervisor'], User['node'] ]
+    , require => [ Package['supervisor', 'node-supervisor'], User['node'] ]
   }
 }

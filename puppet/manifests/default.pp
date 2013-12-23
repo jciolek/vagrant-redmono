@@ -62,11 +62,11 @@ class mongodb {
 
 
 class { 'redis':
-    version => '2.6.14'
+    version => '2.8.3'
 }
 
 class { 'nodejs':
-    node_ver => 'v0.10.21'
+    node_ver => 'v0.10.24'
 }
 
 class { 'apt': }

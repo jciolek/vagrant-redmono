@@ -1,10 +1,10 @@
 class redis(
-    $version = '2.4.14'
+    $version = '2.6.17'
   , $port = '6379'
 ) {
 
   $redis_tar = "redis-$version.tar.gz"
-  $redis_dl = "http://redis.googlecode.com/files/$redis_tar"
+  $redis_dl = "http://download.redis.io/releases/$redis_tar"
 
   if defined(Package['curl']) == false {
     package { "curl":
@@ -110,6 +110,6 @@ class redis(
 
   service { "redis-server-${port}":
       ensure    => running
-    , require   => [ User['redis'], File['redis_upstart', 'redis_conffile', 'redis_logfile', 'redis_libdir'] ]
+    , require   => [ User['redis'], Exec['install_redis'], File['redis_upstart', 'redis_conffile', 'redis_logfile', 'redis_libdir'] ]
   }
 }
