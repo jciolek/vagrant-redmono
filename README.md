@@ -43,8 +43,8 @@ I have built and tested this project against Ubuntu 12.04 64 bit. If you need 32
 ## Building blocks
 The box provisioned will have the following installed and ready to rock and roll:
 
-- nodejs: v0.10.18 (compiled from source)
-- redis: v2.4.14 (compiled from source, listening on port 6379)
+- nodejs: v0.10.24 (compiled from source)
+- redis: v2.8.3 (compiled from source, listening on port 6379)
 - mongodb: latest version from http://downloads-distro.mongodb.org/repo/ubuntu-upstart
 - nginx: as a reverse proxy, serving over http and https
 - supervisor: to keep your app up and running
